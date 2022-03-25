@@ -101,6 +101,7 @@ def main():
                           config.get('api', 'url'))
         else:
             logging.error(str(e))
+            print(df)
         exit(1)
 
     logging.info("Starting main loop - wait until next API-Request '%s' seconds",api_request_interval)
@@ -111,7 +112,7 @@ def main():
         start = int(datetime.utcnow().timestamp() * 1000)  
         logging.info("Starting API requests")
         time.sleep(api_request_interval) # wait, otherwise Exception 429, 'Limitation: maximum number of requests per second exceeded']
-        df_response, API_request_counter=getdatafromAPIforzones(countryCodes,api_request_pause,token)
+        df_response, API_request_counter=getdatafromAPIforzones(countryCodes,api_request_pause,token,API_request_counter)
         write2influx(influxdb_client,protocol,measurement_name,df_response)
         duration = int(datetime.utcnow().timestamp() * 1000) - start
         logging.info("Duration of requesting API: %0.3fs" % (duration / 1000)) 
