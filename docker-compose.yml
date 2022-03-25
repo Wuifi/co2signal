@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  co2signal2influx:
+      build:
+          context: .
+          dockerfile: Dockerfile
+      container_name: co2signal2influx
+      network_mode: host
+      restart: unless-stopped
+      volumes:
+        - ./config.ini:/app/config.ini
